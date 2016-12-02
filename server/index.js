@@ -162,8 +162,8 @@ app.put('/set-active-category', passport.authenticate('bearer', {session: false}
       });
   });
 
-// PUT: Add bookmark to existing category
-app.put('/add-bookmark/:_id', passport.authenticate('bearer', {session: false}),
+// PUT: Add booknote to existing category
+app.put('/add-booknote/:_id', passport.authenticate('bearer', {session: false}),
   function(req, res) {
     var _id = req.params._id;
     var googleID = req.user.googleID;
@@ -178,11 +178,11 @@ app.put('/add-bookmark/:_id', passport.authenticate('bearer', {session: false}),
       });
   });
 
-// DELETE: Remove bookmark from existing category
-app.delete('/delete-bookmark/:_id', passport.authenticate('bearer', {session: false}),
+// DELETE: Remove booknote from existing category
+app.delete('/delete-booknote/:_id', passport.authenticate('bearer', {session: false}),
   function(req, res) {
     User.findOneAndUpdate( { 'googleID':req.user.googleID, 'categories.cat_id': req.params._id },
-                  { $pull : { 'categories.$.items':{ 'bookmark_id': req.body.bookmark_id } } },
+                  { $pull : { 'categories.$.items':{ 'booknote_id': req.body.booknote_id } } },
                   { new: true },
       function(err, user) {
         if(err) {
