@@ -4,14 +4,22 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 
 
-var BooknotesCategory = React.createClass({
-	setActiveCategory: function() {
+class BooknotesCategory extends React.Component {
+	constructor(props) {
+		super(props);
+		this.setActiveCategory = this.setActiveCategory.bind(this);
+		this.deleteCategory = this.deleteCategory.bind(this);
+	}
+
+	setActiveCategory() {
 		this.props.dispatch(actions.setActiveCategory(this.props.cat.cat_id));
-	},
-	deleteCategory: function() {
+	}
+	
+	deleteCategory() {
 		this.props.dispatch(actions.deleteCategory(this.props.cat.cat_id));
-	},
-	render: function(props) {
+	}
+
+	render(props) {
 		return (
 			<div id="booknotes-category">
 				<Link to={'/booknotes/list'} onClick={this.setActiveCategory} >{this.props.cat.categoryName}</Link>
@@ -19,9 +27,7 @@ var BooknotesCategory = React.createClass({
 			</div>
 		)
 	}
-})
+}
 
 
-var Container = connect()(BooknotesCategory);
-
-module.exports = Container;
+export default connect()(BooknotesCategory);

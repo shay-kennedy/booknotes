@@ -5,11 +5,13 @@ import TitleBar from './title-bar';
 import BooknotesTabs from './booknotes-tabs';
 
 
-var MainContainer = React.createClass({
-	componentWillMount: function() {
+class MainContainer extends React.Component {
+	constructor(props) {
+		super(props);
 		this.props.dispatch(actions.fetchUser());
-	},
-	render: function(props) {
+	}
+
+	render(props) {
 		return (
 			<div id="main-container">
 				<TitleBar />
@@ -18,9 +20,7 @@ var MainContainer = React.createClass({
 			</div>
 		)
 	}
-})
+}
 
 
-var Container = connect()(MainContainer);
-
-module.exports = Container;
+export default connect()(MainContainer);
