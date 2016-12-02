@@ -88,6 +88,7 @@
     "bson-objectid": "^1.1.4",
     "express": "^4.14.0",
     "isomorphic-fetch": "^2.2.1",
+    "js-cookie": "^2.1.3",
     "material-ui": "^0.16.4",
     "mongod": "^1.3.0",
     "mongoose": "^4.7.1",
@@ -95,11 +96,14 @@
     "passport-google-oauth20": "^1.0.0",
     "passport-http-bearer": "^1.0.1",
     "react": "^15.4.1",
+    "react-addons-css-transition-group": "^15.4.1",
+    "react-addons-transition-group": "^15.4.1",
     "react-addons-update": "^15.4.1",
     "react-dom": "^15.4.1",
     "react-redux": "^4.4.6",
     "react-router": "^3.0.0",
     "react-tap-event-plugin": "^2.0.1",
+    "reactstrap": "^3.9.3",
     "redux": "^3.6.0",
     "redux-thunk": "^2.1.0"
   }

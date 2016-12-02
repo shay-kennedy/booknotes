@@ -7,8 +7,6 @@ import Login from './login';
 import MainContainer from './main-container';
 import MainLanding from './main-landing';
 import BooknotesList from './booknotes-list';
-import BooknotesContainer from './booknotes-container';
-import BooknotesLanding from './booknotes-landing';
 
 
 var routes = (
