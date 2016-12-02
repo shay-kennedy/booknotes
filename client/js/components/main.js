@@ -7,7 +7,7 @@ const Main = (props) => {
 			{props.children}
 		</div>
 	)
-};
+}
 
 
 export default Main;

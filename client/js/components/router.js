@@ -9,7 +9,7 @@ import MainLanding from './main-landing';
 import BooknotesList from './booknotes-list';
 
 
-var routes = (
+const routes = (
 	<Provider store={store}>
 		<Router history={hashHistory} >
 			<Route path="/" component={Main} >

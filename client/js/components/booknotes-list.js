@@ -4,8 +4,14 @@ import { connect } from 'react-redux';
 import BooknotesDetail from './booknotes-detail';
 
 
-var BooknotesList = React.createClass({
-	addBooknote: function(e) {
+class BooknotesList extends React.Component {
+	constructor(props) {
+		super(props);
+		this.addBooknote = this.addBooknote.bind(this);
+	}
+
+
+	addBooknote(e) {
 		e.preventDefault();
 		var title = prompt('Note title:');
 		var website = prompt('Note url:');
@@ -18,8 +24,9 @@ var BooknotesList = React.createClass({
 			return;
 		};
 		this.props.dispatch(actions.addBooknote(title, website, note, this.props.activeCategory));
-	},
-	render: function(props) {
+	}
+
+	render(props) {
 		if (this.props.activeCategory == null) {
 			return (
 				<div>
@@ -45,10 +52,10 @@ var BooknotesList = React.createClass({
 			</div>
 		)
 	}
-})
+}
 
 
-var mapStateToProps = function(state, props) {
+const mapStateToProps = (state, props) => {
   return {
     category: state.categories.find((cat) => {
       if(state.activeCategory == cat.cat_id) {
@@ -59,6 +66,4 @@ var mapStateToProps = function(state, props) {
   };
 };
 
-var Container = connect(mapStateToProps)(BooknotesList);
-
-module.exports = Container;
+export default connect(mapStateToProps)(BooknotesList);
