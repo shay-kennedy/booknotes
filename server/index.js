@@ -178,6 +178,25 @@ app.put('/add-booknote/:_id', passport.authenticate('bearer', {session: false}),
       });
   });
 
+// PUT: Edit booknote from existing category
+app.put('/edit-booknote/:_id', passport.authenticate('bearer', {session: false}),
+  function(req, res) {
+    console.log('REQ.USER', req.user);
+    console.log('REQ.BODY', req.body);
+    User.findOneAndUpdate( 
+                  { 'googleID': req.user.googleID },
+                  { $set: { 'categories.$.items.title': req.body.title } },
+                  { new: true },
+      function(err, user) {
+        if(err) {
+          console.log('ERR', err);
+          return res.send(err)
+        }
+        console.log('USER', user.categories);
+        return res.json(user);
+      });
+  });
+
 // DELETE: Remove booknote from existing category
 app.delete('/delete-booknote/:_id', passport.authenticate('bearer', {session: false}),
   function(req, res) {

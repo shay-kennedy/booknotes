@@ -23,7 +23,7 @@ class BooknotesCategory extends React.Component {
 		return (
 			<div id="booknotes-category">
 				<Link to={'/booknotes/list'} onClick={this.setActiveCategory} >{this.props.cat.categoryName}</Link>
-				<Link to={'/booknotes'} onClick={this.deleteCategory}>DELETE</Link>
+				<Link to={'/booknotes'} onClick={this.deleteCategory}><img className="delete-icon" src="./assets/images/delete-icon.png" /></Link>
 			</div>
 		)
 	}

@@ -52,8 +52,8 @@ class BooknotesList extends React.Component {
 		if (this.props.category.items.length == 0) {
 			return (
 				<div>
-					<p>Add a Booknote to this category.</p>
 					<Button color="danger" onClick={this.toggle}>Add Booknote</Button>
+					<p>Add a Booknote to this category.</p>
 					<Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
 	          <ModalHeader toggle={this.toggle}>Modal title</ModalHeader>
 	          <ModalBody>
@@ -78,7 +78,6 @@ class BooknotesList extends React.Component {
 				</div>
 			)
 		};
-		console.log("HERE", this.props.category.items);
 		var booknoteList = this.props.category.items.map((item) => {
 			return (<BooknotesDetail key={item.booknote_id} item={item} activeCategory={this.props.activeCategory} />)
 		});
@@ -106,7 +105,7 @@ class BooknotesList extends React.Component {
             </Form>
           </ModalBody>
         </Modal>
-				{booknoteList || <div>Hi</div>}
+				{booknoteList}
 			</div>
 		)
 	}
