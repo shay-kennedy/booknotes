@@ -28,7 +28,6 @@ var reducer = function(state, action) {
 				categories: user.categories,
 				activeCategory: user.activeCategory
 			});
-			console.log('NEW STATE', newState);
 			return newState;
 		
 		case actions.FETCH_USER_ERROR:
@@ -36,7 +35,6 @@ var reducer = function(state, action) {
 			return state;
 	
 	}
-	console.log('STATE', state);
 	return state;	
 };
 

@@ -190,6 +190,45 @@ var addBooknote = function(title, website, note, cat_id) {
   }
 };
 
+// PUT request to edit booknote
+var editBooknote = function(title, website, note, booknote_id, cat_id) {
+  return function(dispatch) {
+    var token = Cookies.get('accessToken');
+    var url = `edit-booknote/${cat_id}`;
+  return fetch(url,
+  {
+    method: 'put',
+    headers: {'Content-type': 'application/json', 'Authorization': 'bearer ' + token},
+    body: JSON.stringify({
+      'title': title,
+      'url': website,
+      'note': note,
+      'booknote_id': booknote_id
+    })
+  }
+    ).then(function(response) {
+      if(response.status < 200 || response.status > 300) {
+        var error = new Error(response.statusText);
+        error.response = response;
+        throw error;
+      }
+      return response.json();
+    })
+    .then(function(user) {
+      console.log('USER', user);
+      return dispatch(
+        fetchUserSuccess(user)
+        );
+    })
+    .catch(function(error) {
+      console.log('ERROR', error);
+      return dispatch(
+        fetchUserError(error)
+        );
+    });
+  }
+};
+
 // DELETE request to delete booknote
 var deleteBooknote = function(cat_id, booknote_id) {
   console.log('DELETE NOTE ACTION HIT', cat_id);
@@ -237,4 +276,5 @@ exports.addCategory = addCategory;
 exports.deleteCategory = deleteCategory;
 exports.setActiveCategory = setActiveCategory;
 exports.addBooknote = addBooknote;
+exports.editBooknote = editBooknote;
 exports.deleteBooknote = deleteBooknote;
