@@ -44,7 +44,7 @@ class BooknotesDetail extends React.Component {
 		if(title === this.props.item.title && website === this.props.item.url && note === this.props.item.note) {
 			return;
 		};
-		// this.props.dispatch(actions.editBooknote(title, website, note, this.props.item.booknote_id, this.props.activeCategory));
+		this.props.dispatch(actions.editBooknote(title, website, note, this.props.item.booknote_id, this.props.activeCategory));
 	}
 
 	deleteBooknote() {

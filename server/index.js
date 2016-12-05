@@ -183,9 +183,12 @@ app.put('/edit-booknote/:_id', passport.authenticate('bearer', {session: false})
   function(req, res) {
     console.log('REQ.USER', req.user);
     console.log('REQ.BODY', req.body);
+    var _id = req.params._id;
+    var googleID = req.user.googleID;
+    var booknote_id = req.body.booknote_id;
     User.findOneAndUpdate( 
-                  { 'googleID': req.user.googleID },
-                  { $set: { 'categories.$.items.title': req.body.title } },
+                  { 'categories.$.items.booknote_id':booknote_id },
+                  { $set: { 'categories.$.items': req.body } },
                   { new: true },
       function(err, user) {
         if(err) {
