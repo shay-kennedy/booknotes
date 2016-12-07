@@ -24,10 +24,10 @@ var UserSchema = new mongoose.Schema({
   email: {
     type: String
   },
-  categories: {
-    type: Array,
-    default: []
-  },
+  categories: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Category'
+  }],
   activeCategory: {
     type: String
   }
