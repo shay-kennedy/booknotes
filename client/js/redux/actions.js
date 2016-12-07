@@ -199,12 +199,12 @@ var editBooknote = function(title, website, note, booknote_id, cat_id) {
   {
     method: 'put',
     headers: {'Content-type': 'application/json', 'Authorization': 'bearer ' + token},
-    body: JSON.stringify([{
+    body: JSON.stringify({
       'title': title,
       'url': website,
       'note': note,
       'booknote_id': booknote_id
-    }])
+    })
   }
     ).then(function(response) {
       if(response.status < 200 || response.status > 300) {

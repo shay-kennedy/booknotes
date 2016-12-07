@@ -181,23 +181,35 @@ app.put('/add-booknote/:_id', passport.authenticate('bearer', {session: false}),
 // PUT: Edit booknote from existing category
 app.put('/edit-booknote/:_id', passport.authenticate('bearer', {session: false}),
   function(req, res) {
-    console.log('REQ.USER', req.user);
-    console.log('REQ.BODY', req.body);
-    var _id = req.params._id;
-    var googleID = req.user.googleID;
-    var booknote_id = req.body.booknote_id;
-    User.findOneAndUpdate( 
-                  { 'categories.$.items.booknote_id':booknote_id },
-                  { $set: { 'categories.$.items': req.body } },
-                  { new: true },
+    User.findOne({ googleID: req.user.googleID },
       function(err, user) {
+        console.log('USER BEFORE', user.categories[1].items[0]);
         if(err) {
-          console.log('ERR', err);
           return res.send(err)
         }
-        console.log('USER', user.categories);
-        return res.json(user);
+        
+        for(var i = 0; i < user.categories.length; i++) {
+          if(user.categories[i].cat_id == req.params._id) {
+            for(var j = 0; j < user.categories[i].items.length; j++) {
+              if(user.categories[i].items[j].booknote_id == req.body.booknote_id) {
+                user.categories[i].items[j].title = req.body.title;
+                user.categories[i].items[j].url = req.body.url;
+                user.categories[i].items[j].note = req.body.note;
+              }
+            }
+          }
+        }
+
+        console.log('UPDATED USER', user.categories[1].items[0]);
+        user.save(function(err) {
+          if(err) {
+            return res.send(err)
+          }
+          return res.json(user);
+        })
+        
       });
+    
   });
 
 // DELETE: Remove booknote from existing category
@@ -234,3 +246,33 @@ function runServer() {
 if (require.main === module) {
   runServer();
 }
+
+
+// for loop inside a for loop
+        // var category = user.categories.find((cat) => {
+        //   if(cat.cat_id == req.params._id) {
+        //     return cat
+        //   }
+        // });
+        // var booknote = category.items.find((item) => {
+        //   if(item.booknote_id == req.body.booknote_id) {
+        //     return item
+        //   }
+        // });
+        
+        // user.categories.find((cat) => {
+        //   if(cat.cat_id == req.params._id) {
+        //     cat.items.find((item) => {
+        //       if(item.booknote_id == req.body.booknote_id) {
+        //         title = req.body.title;
+        //         url = req.body.url;
+        //         note = req.body.note;
+        //         // return item
+        //       }
+        //     })
+        //   }
+        // });
+     
+// booknote.title = req.body.title;
+        // booknote.url = req.body.url;
+        // booknote.note = req.body.note;   
