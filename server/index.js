@@ -14,9 +14,8 @@ import { Strategy as BearerStrategy } from 'passport-http-bearer';
 import passport from 'passport';
 import bodyParser from 'body-parser';
 
-// Import models
+// User model
 import User from './models/user';
-import Category from './models/category';
 
 try {
   var config = require('../config');
