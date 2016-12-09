@@ -2,16 +2,13 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var CategorySchema = new Schema({
-  title: { 
-    type: String, 
-    required: true 
-  },
-  url: {
+  categoryName: {
     type: String,
     required: true
   },
-  note: {
-    type: String
+  items: {
+    type: Array,
+    default: []
   }
 });
 
