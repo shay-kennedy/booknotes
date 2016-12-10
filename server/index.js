@@ -139,17 +139,24 @@ app.post('/add-category', passport.authenticate('bearer', {session: false}),
 // DELETE: Remove category
 app.delete('/delete-category', passport.authenticate('bearer', {session: false}),
   function(req, res) {
-    User.findOneAndUpdate({ 'googleID':req.user.googleID },
-                  {
-                    $pull: { 'categories':{'cat_id':req.body.cat_id} },
-                    $set: {'activeTrip': null}
-                  },
-                  {new: true},
-      function(err, user) {
+    Category.findOneAndRemove({ '_id':req.body._id },
+      function(err, category) {
         if(err) {
           return res.send(err)
         }
-        return res.json(user);
+
+        User.findOne({googleID: req.user.googleID})
+        .populate('categories')
+        .then((user) => {
+          if (!user) {
+            res.send("Error has occured")
+          } else {
+            res.json(user);
+          }
+        })
+        .catch((err) => {
+          res.send(err)
+        });
       });
   });
 
