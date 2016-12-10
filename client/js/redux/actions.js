@@ -37,6 +37,7 @@ var fetchUser = function() {
       return response.json();
     })
     .then(function(user) {
+      console.log('USER', user);
       return dispatch(
         fetchUserSuccess(user)
       );
@@ -56,12 +57,10 @@ var addCategory = function(category) {
     var url = '/add-category';
   return fetch(url,
     {
-      method: 'put',
+      method: 'post',
       headers: {'Content-type': 'application/json', 'Authorization': 'bearer ' + token},
       body: JSON.stringify({
-        'categoryName': category,
-        'cat_id': ObjectID(),
-        'items': []
+        'categoryName': category
       })
     }
     ).then(function(response) {
@@ -73,11 +72,13 @@ var addCategory = function(category) {
       return response.json();
     })
     .then(function(user) {
+      console.log('AC USER', user);
       return dispatch(
         fetchUserSuccess(user)
         );
     })
     .catch(function(error) {
+      console.log('AC ERROR', error);
       return dispatch(
         fetchUserError(error)
         );
