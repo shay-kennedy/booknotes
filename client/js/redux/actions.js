@@ -87,7 +87,7 @@ var addCategory = function(category) {
 };
 
 // DELETE request to remove entire category
-var deleteCategory = function(cat_id) {
+var deleteCategory = function(_id) {
   return function(dispatch) {
     var token = Cookies.get('accessToken');
     var url = '/delete-category';
@@ -96,7 +96,7 @@ var deleteCategory = function(cat_id) {
     method: 'delete',
     headers: {'Content-type': 'application/json', 'Authorization': 'bearer ' + token},
     body: JSON.stringify({
-      'cat_id': cat_id
+      '_id': _id
     })
   }
     ).then(function(response) {

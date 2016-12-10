@@ -16,7 +16,7 @@ class BooknotesCategory extends React.Component {
 	}
 	
 	deleteCategory() {
-		this.props.dispatch(actions.deleteCategory(this.props.cat.cat_id));
+		this.props.dispatch(actions.deleteCategory(this.props.cat._id));
 	}
 
 	render(props) {
