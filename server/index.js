@@ -16,10 +16,13 @@ import bodyParser from 'body-parser';
 
 // User model
 import User from './models/user';
+import Category from './models/category';
 
 try {
   var config = require('../config');
 } catch (e) {};
+
+mongoose.Promise = global.Promise;
 
 // Database Setup
 const db = process.env.DBPATH || config.mongoDB.dbPath;
@@ -102,32 +105,35 @@ app.get('/logout', (req, res) => {
 // GET: Retrieve user object
 app.get('/user', passport.authenticate('bearer', {session: false}), 
   (req, res) => {
-    const googleID = req.user.googleID;
-    User.findOne({googleID: googleID}, (err, user) => {
-      if (err) {
+    User.findOne({googleID: req.user.googleID})
+    .populate('categories')
+    .then((user) => {
+      if (!user) {
         res.send("Error has occured")
       } else {
         res.json(user);
       }
+    })
+    .catch((err) => {
+      res.send(err)
     });
 });
 
 // POST: Add category
-app.put('/add-category', passport.authenticate('bearer', {session: false}), 
+app.post('/add-category', passport.authenticate('bearer', {session: false}), 
   (req, res) => {
+    const newCategory = new Category({
+      categoryName: req.body.categoryName
+    });
+    newCategory.save();
     User.findOneAndUpdate(
-            { 'googleID': req.user.googleID },
-            {
-              $push: { 'categories':req.body },
-              $set: { 'activeCategory': req.body.cat_id }
-            },
-            { new:true },
+              { 'googleID': req.user.googleID },
+              { $push: { 'categories': newCategory._id } },
+              { new: true, populate: 'categories' },
       (err, user) => {
-        if(err) {
-          return res.send(err)
-        }
-        return res.json(user);
-      });
+      if (err) return res.send(err);
+      return res.json(user);
+    })
   });
 
 // DELETE: Remove category
