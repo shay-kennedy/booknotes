@@ -150,6 +150,16 @@ app.delete('/delete-category', passport.authenticate('bearer', {session: false})
         if(err) {
           return res.send(err)
         }
+        // User.findOne( {googleID: req.user.googleID})
+        // .populate('categories')
+        // .then((user) => {
+        //   if(user.activeCategory == req.body._id) {
+        //     user.update({ $set: { activeCategory: null } });
+        //     user.save();
+        //     return res.json(user);
+        //   }
+        //   return res.json(user);
+        // })
         User.findOneAndUpdate(
               { googleID: req.user.googleID },
               { 
