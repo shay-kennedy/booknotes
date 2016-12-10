@@ -2,12 +2,14 @@ import actions from './actions';
 
 const initialState = {
 	googleID: null,
+	_id: null,
 	firstName: null,
 	lastName: null,
 	categories: [
 		{
 			items: [],
-			categoryName: ''
+			categoryName: '',
+			_id: null
 		}
 	],
 	activeCategory: null
@@ -23,6 +25,7 @@ var reducer = function(state, action) {
 			var user = action.user;
 			var newState = Object.assign({}, state, {
 				googleID: user.googleID,
+				_id: user._id,
 				firstName: user.firstName,
 				lastName: user.lastName,
 				categories: user.categories,
