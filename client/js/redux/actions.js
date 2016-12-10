@@ -121,7 +121,7 @@ var deleteCategory = function(_id) {
 };
 
 // PUT request to set activeCategory
-var setActiveCategory = function(activeCategory) {
+var setActiveCategory = function(_id) {
   return function(dispatch) {
     var token = Cookies.get('accessToken');
     var url = '/set-active-category';
@@ -130,7 +130,7 @@ var setActiveCategory = function(activeCategory) {
     method: 'put',
     headers: {'Content-type': 'application/json', 'Authorization': 'bearer ' + token},
     body: JSON.stringify({
-        'activeCategory': activeCategory
+        'activeCategory': _id
       })
   }
     ).then(function(response) {

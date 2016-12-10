@@ -12,7 +12,7 @@ class BooknotesCategory extends React.Component {
 	}
 
 	setActiveCategory() {
-		this.props.dispatch(actions.setActiveCategory(this.props.cat.cat_id));
+		this.props.dispatch(actions.setActiveCategory(this.props.cat._id));
 	}
 	
 	deleteCategory() {
