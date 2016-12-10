@@ -128,8 +128,14 @@ app.post('/add-category', passport.authenticate('bearer', {session: false}),
     newCategory.save();
     User.findOneAndUpdate(
               { 'googleID': req.user.googleID },
-              { $push: { 'categories': newCategory._id } },
-              { new: true, populate: 'categories' },
+              { 
+                $push: { 'categories': newCategory._id },
+                $set: { 'activeCategory': newCategory._id } 
+              },
+              { 
+                new: true, 
+                populate: 'categories' 
+              },
       (err, user) => {
       if (err) return res.send(err);
       return res.json(user);
@@ -144,19 +150,20 @@ app.delete('/delete-category', passport.authenticate('bearer', {session: false})
         if(err) {
           return res.send(err)
         }
-
-        User.findOne({googleID: req.user.googleID})
-        .populate('categories')
-        .then((user) => {
-          if (!user) {
-            res.send("Error has occured")
-          } else {
-            res.json(user);
-          }
-        })
-        .catch((err) => {
-          res.send(err)
-        });
+        User.findOneAndUpdate(
+              { googleID: req.user.googleID },
+              { 
+                $pull: { 'categories': req.body._id },
+                $set: { 'activeCategory': null }
+              },
+              { 
+                new: true, 
+                populate: 'categories' 
+              },
+          (err, user) => {
+            if (err) return res.send(err);
+            return res.json(user);
+          });
       });
   });
 
@@ -166,7 +173,10 @@ app.put('/set-active-category', passport.authenticate('bearer', {session: false}
     User.findOneAndUpdate(
             { 'googleID': req.user.googleID },
             { $set: { 'activeCategory': req.body.activeCategory } },
-            { new:true },
+            { 
+              new:true,
+              populate: 'categories' 
+            },
       (err, user) => {
         if(err) {
           return res.send(err)
