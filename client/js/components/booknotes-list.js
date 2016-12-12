@@ -113,6 +113,7 @@ class BooknotesList extends React.Component {
 
 
 const mapStateToProps = (state, props) => {
+  console.log('MAP STATE', state);
   return {
     category: state.categories.find((cat) => {
       if(state.activeCategory == cat._id) {

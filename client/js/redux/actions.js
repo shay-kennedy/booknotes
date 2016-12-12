@@ -231,11 +231,11 @@ var editBooknote = function(title, website, note, booknote_id, cat_id) {
 };
 
 // DELETE request to delete booknote
-var deleteBooknote = function(cat_id, booknote_id) {
-  console.log('DELETE NOTE ACTION HIT', cat_id);
+var deleteBooknote = function(activeCategory, booknote_id) {
+  console.log('DELETE NOTE ACTION HIT', activeCategory);
   return function(dispatch) {
     var token = Cookies.get('accessToken');
-    var url = `delete-booknote/${cat_id}`;
+    var url = `delete-booknote/${activeCategory}`;
   return fetch(url,
   {
     method: 'delete',

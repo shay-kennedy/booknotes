@@ -262,15 +262,24 @@ app.put('/edit-booknote/:_id', passport.authenticate('bearer', {session: false})
 // DELETE: Remove booknote from existing category
 app.delete('/delete-booknote/:_id', passport.authenticate('bearer', {session: false}),
   function(req, res) {
-    User.findOneAndUpdate( { 'googleID':req.user.googleID, 'categories.cat_id': req.params._id },
-                  { $pull : { 'categories.$.items':{ 'booknote_id': req.body.booknote_id } } },
+    Category.findOneAndUpdate( { '_id':req.params._id },
+                  { $pull : { 'items':{ 'booknote_id': req.body.booknote_id } } },
                   { new: true },
       function(err, user) {
-        if(err) {
-          return res.send(err)
-        }
-        return res.json(user);
+        if(err) return res.send(err);
       });
+    User.findOne({googleID: req.user.googleID})
+    .populate('categories')
+    .then((user) => {
+      if (!user) {
+        res.send("Error has occured")
+      } else {
+        res.json(user);
+      }
+    })
+    .catch((err) => {
+      res.send(err)
+    });
   });
 
 
