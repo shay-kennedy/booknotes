@@ -147,24 +147,30 @@ app.delete('/delete-category', passport.authenticate('bearer', {session: false})
   function(req, res) {
     Category.findOneAndRemove({ '_id':req.body._id },
       function(err, category) {
+        console.log('REQ USER', req.user);
         if(err) {
           return res.send(err)
         }
-        // User.findOne( {googleID: req.user.googleID})
-        // .populate('categories')
-        // .then((user) => {
-        //   if(user.activeCategory == req.body._id) {
-        //     user.update({ $set: { activeCategory: null } });
-        //     user.save();
-        //     return res.json(user);
-        //   }
-        //   return res.json(user);
-        // })
+        if(req.user.activeCategory == req.body._id) {
+          User.findOneAndUpdate(
+                { googleID: req.user.googleID },
+                { 
+                  $pull: { 'categories': req.body._id },
+                  $set: { 'activeCategory': null }
+                },
+                { 
+                  new: true, 
+                  populate: 'categories' 
+                },
+            (err, user) => {
+              if (err) return res.send(err);
+              return res.json(user);
+            });
+        }
         User.findOneAndUpdate(
               { googleID: req.user.googleID },
               { 
-                $pull: { 'categories': req.body._id },
-                $set: { 'activeCategory': null }
+                $pull: { 'categories': req.body._id }
               },
               { 
                 new: true, 
