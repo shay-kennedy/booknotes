@@ -228,35 +228,30 @@ app.put('/add-booknote/:_id', passport.authenticate('bearer', {session: false}),
 // PUT: Edit booknote from existing category
 app.put('/edit-booknote/:_id', passport.authenticate('bearer', {session: false}),
   function(req, res) {
-    User.findOne({ googleID: req.user.googleID },
-      function(err, user) {
-        console.log('USER BEFORE', user.categories[1].items[0]);
-        if(err) {
-          return res.send(err)
-        }
-        
-        for(var i = 0; i < user.categories.length; i++) {
-          if(user.categories[i].cat_id == req.params._id) {
-            for(var j = 0; j < user.categories[i].items.length; j++) {
-              if(user.categories[i].items[j].booknote_id == req.body.booknote_id) {
-                user.categories[i].items[j].title = req.body.title;
-                user.categories[i].items[j].url = req.body.url;
-                user.categories[i].items[j].note = req.body.note;
-              }
-            }
-          }
-        }
-
-        console.log('UPDATED USER', user.categories[1].items[0]);
-        user.save(function(err) {
-          if(err) {
-            return res.send(err)
-          }
-          return res.json(user);
-        })
-        
+    Category.findOneAndUpdate( { '_id': req.params._id, 'items.booknote_id': req.body.booknote_id },
+                    { $set : 
+                        { 
+                          'items.$.title': req.body.title,
+                          'items.$.url': req.body.url,
+                          'items.$.note': req.body.note
+                        }
+                    },
+                    { new: true }, 
+      function(err, category) {
+        if(err) return res.send(err);
       });
-    
+    User.findOne({googleID: req.user.googleID})
+    .populate('categories')
+    .then((user) => {
+      if (!user) {
+        res.send("Error has occured")
+      } else {
+        res.json(user);
+      }
+    })
+    .catch((err) => {
+      res.send(err)
+    });
   });
 
 // DELETE: Remove booknote from existing category
