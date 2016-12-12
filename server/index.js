@@ -147,7 +147,6 @@ app.delete('/delete-category', passport.authenticate('bearer', {session: false})
   function(req, res) {
     Category.findOneAndRemove({ '_id':req.body._id },
       function(err, category) {
-        console.log('REQ USER', req.user);
         if(err) {
           return res.send(err)
         }
@@ -163,23 +162,27 @@ app.delete('/delete-category', passport.authenticate('bearer', {session: false})
                   populate: 'categories' 
                 },
             (err, user) => {
+              
+              if (err) {
+                return res.send(err);
+              }
+              return res.json(user);
+            });
+        } else {
+          User.findOneAndUpdate(
+                { googleID: req.user.googleID },
+                { 
+                  $pull: { 'categories': req.body._id }
+                },
+                { 
+                  new: true, 
+                  populate: 'categories' 
+                },
+            (err, user) => {
               if (err) return res.send(err);
               return res.json(user);
             });
         }
-        User.findOneAndUpdate(
-              { googleID: req.user.googleID },
-              { 
-                $pull: { 'categories': req.body._id }
-              },
-              { 
-                new: true, 
-                populate: 'categories' 
-              },
-          (err, user) => {
-            if (err) return res.send(err);
-            return res.json(user);
-          });
       });
   });
 
@@ -297,33 +300,3 @@ function runServer() {
 if (require.main === module) {
   runServer();
 }
-
-
-// for loop inside a for loop
-        // var category = user.categories.find((cat) => {
-        //   if(cat.cat_id == req.params._id) {
-        //     return cat
-        //   }
-        // });
-        // var booknote = category.items.find((item) => {
-        //   if(item.booknote_id == req.body.booknote_id) {
-        //     return item
-        //   }
-        // });
-        
-        // user.categories.find((cat) => {
-        //   if(cat.cat_id == req.params._id) {
-        //     cat.items.find((item) => {
-        //       if(item.booknote_id == req.body.booknote_id) {
-        //         title = req.body.title;
-        //         url = req.body.url;
-        //         note = req.body.note;
-        //         // return item
-        //       }
-        //     })
-        //   }
-        // });
-     
-// booknote.title = req.body.title;
-        // booknote.url = req.body.url;
-        // booknote.note = req.body.note;   

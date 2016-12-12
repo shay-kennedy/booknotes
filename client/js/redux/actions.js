@@ -37,7 +37,6 @@ var fetchUser = function() {
       return response.json();
     })
     .then(function(user) {
-      console.log('USER', user);
       return dispatch(
         fetchUserSuccess(user)
       );
@@ -72,13 +71,11 @@ var addCategory = function(category) {
       return response.json();
     })
     .then(function(user) {
-      console.log('AC USER', user);
       return dispatch(
         fetchUserSuccess(user)
         );
     })
     .catch(function(error) {
-      console.log('AC ERROR', error);
       return dispatch(
         fetchUserError(error)
         );
@@ -216,13 +213,11 @@ var editBooknote = function(title, website, note, booknote_id, activeCategory) {
       return response.json();
     })
     .then(function(user) {
-      console.log('USER', user);
       return dispatch(
         fetchUserSuccess(user)
         );
     })
     .catch(function(error) {
-      console.log('ERROR', error);
       return dispatch(
         fetchUserError(error)
         );
@@ -252,13 +247,11 @@ var deleteBooknote = function(activeCategory, booknote_id) {
       return response.json();
     })
     .then(function(user) {
-      console.log('USER SUCCESS DELETE NOTE', user);
       return dispatch(
         fetchUserSuccess(user)
         );
     })
     .catch(function(error) {
-      console.log('USER SUCCESS DELETE ERR');
       return dispatch(
         fetchUserError(error)
         );
