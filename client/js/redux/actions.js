@@ -155,10 +155,10 @@ var setActiveCategory = function(_id) {
 };
 
 // PUT request to add booknote
-var addBooknote = function(title, website, note, cat_id) {
+var addBooknote = function(title, website, note, activeCategory) {
   return function(dispatch) {
     var token = Cookies.get('accessToken');
-    var url = `add-booknote/${cat_id}`;
+    var url = `add-booknote/${activeCategory}`;
   return fetch(url,
   {
     method: 'put',
