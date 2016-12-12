@@ -192,10 +192,10 @@ var addBooknote = function(title, website, note, activeCategory) {
 };
 
 // PUT request to edit booknote
-var editBooknote = function(title, website, note, booknote_id, cat_id) {
+var editBooknote = function(title, website, note, booknote_id, activeCategory) {
   return function(dispatch) {
     var token = Cookies.get('accessToken');
-    var url = `edit-booknote/${cat_id}`;
+    var url = `edit-booknote/${activeCategory}`;
   return fetch(url,
   {
     method: 'put',
@@ -232,7 +232,6 @@ var editBooknote = function(title, website, note, booknote_id, cat_id) {
 
 // DELETE request to delete booknote
 var deleteBooknote = function(activeCategory, booknote_id) {
-  console.log('DELETE NOTE ACTION HIT', activeCategory);
   return function(dispatch) {
     var token = Cookies.get('accessToken');
     var url = `delete-booknote/${activeCategory}`;
