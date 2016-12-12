@@ -204,17 +204,25 @@ app.put('/set-active-category', passport.authenticate('bearer', {session: false}
 // PUT: Add booknote to existing category
 app.put('/add-booknote/:_id', passport.authenticate('bearer', {session: false}),
   function(req, res) {
-    var _id = req.params._id;
     var googleID = req.user.googleID;
-    User.findOneAndUpdate( { 'googleID':googleID, 'categories.cat_id':_id },
-                  { $push : { 'categories.$.items': req.body } },
+    Category.findOneAndUpdate( { '_id':req.params._id },
+                  { $push : { 'items': req.body } },
                   { new: true },
-      function(err, user) {
-        if(err) {
-          return res.send(err)
-        }
-        return res.json(user);
+      function(err, category) {
+        if(err) return res.send(err);
       });
+    User.findOne({googleID: req.user.googleID})
+    .populate('categories')
+    .then((user) => {
+      if (!user) {
+        res.send("Error has occured")
+      } else {
+        res.json(user);
+      }
+    })
+    .catch((err) => {
+      res.send(err)
+    });
   });
 
 // PUT: Edit booknote from existing category
