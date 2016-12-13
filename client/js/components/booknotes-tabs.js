@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import BooknotesCategory from './booknotes-category';
 
 
-class BooknotesNav extends React.Component {
+class BooknotesTabs extends React.Component {
 	constructor(props) {
 		super(props);
 		this.addCategory = this.addCategory.bind(this);
@@ -20,6 +20,9 @@ class BooknotesNav extends React.Component {
 	}
 
 	render(props) {
+		if (this.props.categories.length == 0) {
+			return <p>Loading...</p>
+		};
 		var categoryTabs = this.props.categories.map((cat, index) => {
 			return <BooknotesCategory key={index} cat={cat} />
 		});
@@ -39,4 +42,4 @@ const mapStateToProps = (state, props) => {
 	};
 };
 
-export default connect(mapStateToProps)(BooknotesNav);
+export default connect(mapStateToProps)(BooknotesTabs);

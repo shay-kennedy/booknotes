@@ -5,13 +5,7 @@ const initialState = {
 	_id: null,
 	firstName: null,
 	lastName: null,
-	categories: [
-		{
-			items: [],
-			categoryName: '',
-			_id: null
-		}
-	],
+	categories: [],
 	activeCategory: null
 };
 
