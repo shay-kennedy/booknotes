@@ -142,6 +142,30 @@ app.post('/add-category', passport.authenticate('bearer', {session: false}),
     })
   });
 
+// PUT: Edit category name
+app.put('/edit-category', passport.authenticate('bearer', {session: false}), 
+  (req, res) => {
+    Category.findOneAndUpdate(
+                { _id: req.body._id},
+                { $set: { 'categoryName': req.body.newCategoryName } },
+                { new: true },
+      function(err, category) {
+        if(err) return res.send(err);
+      });
+    User.findOne({googleID: req.user.googleID})
+    .populate('categories')
+    .then((user) => {
+      if (!user) {
+        res.send("Error has occured")
+      } else {
+        res.json(user);
+      }
+    })
+    .catch((err) => {
+      res.send(err)
+    });
+  });
+
 // DELETE: Remove category
 app.delete('/delete-category', passport.authenticate('bearer', {session: false}),
   function(req, res) {

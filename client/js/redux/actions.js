@@ -49,7 +49,7 @@ var fetchUser = function() {
   }
 };
 
-// PUT request to add category
+// POST request to add category
 var addCategory = function(category) {
   return function(dispatch) {
     var token = Cookies.get('accessToken');
@@ -60,6 +60,41 @@ var addCategory = function(category) {
       headers: {'Content-type': 'application/json', 'Authorization': 'bearer ' + token},
       body: JSON.stringify({
         'categoryName': category
+      })
+    }
+    ).then(function(response) {
+      if(response.status < 200 || response.status > 300) {
+        var error = new Error(response.statusText);
+        error.response = response;
+        throw error;
+      }
+      return response.json();
+    })
+    .then(function(user) {
+      return dispatch(
+        fetchUserSuccess(user)
+        );
+    })
+    .catch(function(error) {
+      return dispatch(
+        fetchUserError(error)
+        );
+    });
+  }
+};
+
+// PUT request to add category
+var editCategory = function(_id, newCategoryName) {
+  return function(dispatch) {
+    var token = Cookies.get('accessToken');
+    var url = '/edit-category';
+  return fetch(url,
+    {
+      method: 'put',
+      headers: {'Content-type': 'application/json', 'Authorization': 'bearer ' + token},
+      body: JSON.stringify({
+        '_id': _id,
+        'newCategoryName': newCategoryName
       })
     }
     ).then(function(response) {
@@ -266,6 +301,7 @@ exports.fetchUserError = fetchUserError;
 exports.FETCH_USER_SUCCESS = FETCH_USER_SUCCESS;
 exports.FETCH_USER_ERROR = FETCH_USER_ERROR;
 exports.addCategory = addCategory;
+exports.editCategory = editCategory;
 exports.deleteCategory = deleteCategory;
 exports.setActiveCategory = setActiveCategory;
 exports.addBooknote = addBooknote;
