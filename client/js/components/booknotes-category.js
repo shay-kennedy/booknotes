@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Button, Modal, ModalBody, ModalFooter } from 'reactstrap';
 import actions from '../redux/actions';
 import { connect } from 'react-redux';
@@ -10,6 +11,7 @@ class BooknotesCategory extends React.Component {
 		super(props);
 		this.setActiveCategory = this.setActiveCategory.bind(this);
 		this.deleteCategory = this.deleteCategory.bind(this);
+		this.editCategory = this.editCategory.bind(this);
 		this.toggleOptions = this.toggleOptions.bind(this);
 		this.toggleEditModal = this.toggleEditModal.bind(this);
     this.state = {
@@ -38,6 +40,12 @@ class BooknotesCategory extends React.Component {
 		this.props.dispatch(actions.deleteCategory(this.props.cat._id));
 	}
 
+	editCategory() {
+		var newCategoryName = ReactDOM.findDOMNode(this.refs.categoryName).value.trim();
+		if(newCategoryName === this.props.cat.categoryName) return;
+		this.props.dispatch(actions.editCategory(this.props.cat._id, newCategoryName));
+	}
+
 	render(props) {
 		return (
 			<div id="booknotes-category">
@@ -54,10 +62,10 @@ class BooknotesCategory extends React.Component {
 	      <Modal isOpen={this.state.modal} toggle={this.toggleEditModal} className={this.props.className}>
           <ModalBody>
             <p>Category Name:</p>
-            <input ref="title" />
+            <input ref="categoryName" defaultValue={this.props.cat.categoryName} />
           </ModalBody>
           <ModalFooter>
-            <Button color="primary" onClick={(e) => { this.toggleEditModal(); this.editBooknote(e); }}>Submit</Button>{' '}
+            <Button color="primary" onClick={() => { this.toggleEditModal(); this.editCategory(); }}>Submit</Button>{' '}
             <Button color="secondary" onClick={this.toggleEditModal}>Cancel</Button>
           </ModalFooter>
         </Modal>
