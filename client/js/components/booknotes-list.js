@@ -25,19 +25,15 @@ class BooknotesList extends React.Component {
 	addBooknote(e) {
 		e.preventDefault();
 		var title = ReactDOM.findDOMNode(this.refs.title).value.trim();
-		console.log('TITLE', title);
 		var website = ReactDOM.findDOMNode(this.refs.url).value.trim();
-		console.log('WEBSITE', website);
 		var pattern = /^((http|https|ftp):\/\/)/;
 		if(!pattern.test(website)) {
     	website = "http://" + website;
 		}
 		var note = ReactDOM.findDOMNode(this.refs.note).value.trim();
-		console.log('NOTE', note);
 		if (title == null) {
 			return;
 		};
-		console.log("PASSING", title, website, note);
 		this.props.dispatch(actions.addBooknote(title, website, note, this.props.activeCategory));
 	}
 
