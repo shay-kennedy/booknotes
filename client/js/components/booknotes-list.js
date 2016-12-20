@@ -48,6 +48,7 @@ class BooknotesList extends React.Component {
 		if (this.props.category.items.length == 0) {
 			return (
 				<div>
+					<p className="list-header">Booknote Category: <span className="list-header-name">{this.props.category.categoryName}</span></p>
 					<Button color="danger" onClick={this.toggle}>Add Booknote</Button>
 					<p>Add a Booknote to this category.</p>
 					<Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
@@ -79,6 +80,7 @@ class BooknotesList extends React.Component {
 		});
 		return (
 			<div id="booknote-list">
+				<p className="list-header">Booknote Category: <span className="list-header-name">{this.props.category.categoryName}</span></p>
 				<Button color="danger" onClick={this.toggle}>Add Booknote</Button>
         <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
           <ModalHeader toggle={this.toggle}>Modal title</ModalHeader>

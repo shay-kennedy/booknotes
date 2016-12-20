@@ -57,8 +57,8 @@ class BooknotesDetail extends React.Component {
 				<a href={this.props.item.url} target="_blank" ><p>{this.props.item.title}</p></a>
 				<p>{this.props.item.note}</p>
 				<Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggleOptions} tether>
-	        <DropdownToggle >
-	          Options
+	        <DropdownToggle className="toggle-icon">
+	          <i className="fa fa-cog" aria-hidden="true" />
 	        </DropdownToggle>
 	        <DropdownMenu>
 	          <DropdownItem onClick={this.toggleEditModal}>Edit</DropdownItem>

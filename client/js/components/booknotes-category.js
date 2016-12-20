@@ -56,7 +56,7 @@ class BooknotesCategory extends React.Component {
 					<div className="tab-edit tab-info">
 						<Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggleOptions} tether>
 			        <DropdownToggle className="toggle-icon">
-			          &#9776;
+			          <i className="fa fa-cog" aria-hidden="true" />
 			        </DropdownToggle>
 			        <DropdownMenu>
 			          <DropdownItem onClick={this.toggleEditModal}>Edit</DropdownItem>
