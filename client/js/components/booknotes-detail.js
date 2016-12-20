@@ -54,8 +54,6 @@ class BooknotesDetail extends React.Component {
 	render(props) {
 		return (
 			<div className="booknotes-detail">
-				<a href={this.props.item.url} target="_blank" ><p>{this.props.item.title}</p></a>
-				<p>{this.props.item.note}</p>
 				<Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggleOptions} tether>
 	        <DropdownToggle className="toggle-icon">
 	          <i className="fa fa-cog" aria-hidden="true" />
@@ -65,6 +63,8 @@ class BooknotesDetail extends React.Component {
 	          <DropdownItem onClick={this.deleteBooknote}>Delete</DropdownItem>
 	        </DropdownMenu>
 	      </Dropdown>
+	      <a className="detail-title" href={this.props.item.url} target="_blank" ><p>{this.props.item.title}</p></a>
+				<p className="detail-note">{this.props.item.note}</p>
 	      <Modal isOpen={this.state.modal} toggle={this.toggleEditModal} className={this.props.className}>
           <ModalBody>
             <p>Booknote Title:</p>
