@@ -48,17 +48,23 @@ class BooknotesCategory extends React.Component {
 
 	render(props) {
 		return (
-			<div id="booknotes-category">
-				<Link to={'/booknotes/list'} onClick={this.setActiveCategory} >{this.props.cat.categoryName}</Link>
-				<Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggleOptions} tether>
-	        <DropdownToggle >
-	          <img className="delete-icon" src="./assets/images/delete-icon.png" />
-	        </DropdownToggle>
-	        <DropdownMenu>
-	          <DropdownItem onClick={this.toggleEditModal}>Edit</DropdownItem>
-	          <DropdownItem onClick={this.deleteCategory}>Delete</DropdownItem>
-	        </DropdownMenu>
-	      </Dropdown>
+			<div className="booknotes-category">
+				<div className="tabs">
+					<div className="tab-title tab-info">
+						<Link to={'/booknotes/list'} onClick={this.setActiveCategory} >{this.props.cat.categoryName}</Link>
+					</div>
+					<div className="tab-edit tab-info">
+						<Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggleOptions} tether>
+			        <DropdownToggle className="toggle-icon">
+			          &#9776;
+			        </DropdownToggle>
+			        <DropdownMenu>
+			          <DropdownItem onClick={this.toggleEditModal}>Edit</DropdownItem>
+			          <DropdownItem onClick={this.deleteCategory}>Delete</DropdownItem>
+			        </DropdownMenu>
+			      </Dropdown>
+	      	</div>
+      	</div>
 	      <Modal isOpen={this.state.modal} toggle={this.toggleEditModal} className={this.props.className}>
           <ModalBody>
             <p>Category Name:</p>

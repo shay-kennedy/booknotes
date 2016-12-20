@@ -29,7 +29,7 @@ class BooknotesTabs extends React.Component {
 		return (
 			<div id="booknotes-nav">
 				{categoryTabs}
-				<p onClick={this.addCategory}>+ NEW</p>
+				<p className="booknotes-category new-tab" onClick={this.addCategory} >&#x271A;</p>
 			</div>
 		)
 	}
