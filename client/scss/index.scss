@@ -1,5 +1,36 @@
-.delete-icon {
-	max-width: 1em;
-	max-height: 1em;
-	vertical-align: center;
+
+.booknotes-category {
+	border: 1px solid darkgrey;
+	border-bottom: none;
+	border-radius: 5px 5px 0 0;
+	display: inline-block;
+	padding: 0 .5em;
+	height: 1.75em;
+}
+
+.tab-title, .tab-edit {
+	vertical-align: middle;
+}
+
+.tab-info {
+	display: inline-block;
+}
+
+button.toggle-icon {
+	border: none;
+	padding: 0 0 3px 0;
+	margin-left: .5em;
+}
+
+button.toggle-icon:hover {
+	border: none;
+	background-color: white;
+}
+
+.new-tab {
+	margin-bottom: 0;
+}
+
+#booknotes-nav {
+	margin-bottom: 1em;
 }
