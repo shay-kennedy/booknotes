@@ -1,11 +1,16 @@
 
 .booknotes-category {
 	border: 1px solid darkgrey;
+	margin-top: 2px;
 	border-bottom: none;
 	border-radius: 5px 5px 0 0;
 	display: inline-block;
 	padding: 0 .5em;
 	height: 1.75em;
+}
+
+.active, .booknotes-category:hover {
+	background-color: lightgrey;
 }
 
 .tab-title, .tab-edit {
@@ -20,11 +25,12 @@ button.toggle-icon {
 	border: none;
 	padding: 0 0 3px 0;
 	margin-left: .5em;
+	background: none;
 }
 
 button.toggle-icon:hover {
 	border: none;
-	background-color: white;
+	background: none;
 }
 
 .new-tab {
@@ -33,4 +39,12 @@ button.toggle-icon:hover {
 
 #booknotes-nav {
 	margin-bottom: 1em;
+}
+
+.list-header {
+	font-size: 1.5em;
+}
+
+.list-header-name {
+	color: red;
 }
